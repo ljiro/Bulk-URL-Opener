@@ -194,7 +194,7 @@ export default function App() {
       <ScrollView
         style={styles.mainScroll}
         contentContainerStyle={styles.mainScrollContent}
-        showsVerticalScrollIndicator={true}
+        showsVerticalScrollIndicator={false}
         keyboardShouldPersistTaps="handled"
       >
       <View style={styles.header}>
