@@ -1,13 +1,15 @@
 /**
  * Generates a self-contained HTML "Launchpad" page that opens all URLs in batches
- * when the user clicks Start. The browser runs the loop natively (no backgrounded app).
+ * when the user clicks Start. Opens from the bottom of the list up (last link first).
+ * The browser runs the loop natively (no backgrounded app).
  */
 export function generateLaunchpadHtml(urls, options = {}) {
   const batchSize = Math.max(1, Math.min(15, options.batchSize || 5));
   const linkDelayMs = Math.max(200, options.delayBetweenLinksMs || 400);
   const batchDelayMs = Math.max(1000, options.delayBetweenBatchesMs || 2500);
 
-  const urlsJson = JSON.stringify(urls);
+  const urlsReversed = [...urls].reverse();
+  const urlsJson = JSON.stringify(urlsReversed);
 
   return `<!DOCTYPE html>
 <html lang="en">
@@ -55,7 +57,7 @@ export function generateLaunchpadHtml(urls, options = {}) {
 </head>
 <body>
   <h1>Bulk URL Launchpad</h1>
-  <p class="sub">Opens all links in new tabs with delays to avoid overloading the browser.</p>
+  <p class="sub">Opens links from bottom to top (last first) in new tabs with delays.</p>
   <button class="btn" id="startBtn" type="button">Start opening</button>
   <p id="status"></p>
   <p class="count" id="count"></p>
